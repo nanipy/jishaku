@@ -120,7 +120,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
             Average websocket latency: {round(self.bot.latency * 1000, 2)}ms
         """))
 
-    @jsk.command(name="show")
+    @jsk.command(name="show", hidden=True)
     async def jsk_show(self, ctx: commands.Context):
         """
         Shows Jishaku in the help command.
@@ -178,7 +178,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
         await interface.send_to(ctx)
 
-    @jsk.command(name="tasks")
+    @jsk.command(name="tasks", hidden=True)
     async def jsk_tasks(self, ctx: commands.Context):
         """
         Shows the currently running jishaku tasks.
@@ -220,7 +220,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         return await ctx.send(f"Cancelled task {task.index}: `{task.ctx.command.qualified_name}`,"
                               f" invoked at {task.ctx.message.created_at.strftime('%Y-%m-%d %H:%M:%S')} UTC")
 
-    @jsk.command(name="retain")
+    @jsk.command(name="retain", hidden=True)
     async def jsk_retain(self, ctx: commands.Context, *, toggle: bool):
         """
         Turn variable retention for REPL on or off.
@@ -240,7 +240,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         self.retain = False
         return await ctx.send("Variable retention is OFF. Future REPL sessions will dispose their scope when done.")
 
-    @jsk.command(name="py", aliases=["python"])
+    @jsk.command(name="py", aliases=["python"], hidden=True)
     async def jsk_python(self, ctx: commands.Context, *, argument: CodeblockConverter):
         """
         Direct evaluation of Python code.
@@ -285,7 +285,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
                             await ctx.send(result.replace(self.bot.http.token, "[token omitted]"))
 
-    @jsk.command(name="py_inspect", aliases=["pyi", "python_inspect", "pythoninspect"])
+    @jsk.command(name="py_inspect", aliases=["pyi", "python_inspect", "pythoninspect"], hidden=True)
     async def jsk_python_inspect(self, ctx: commands.Context, *, argument: CodeblockConverter):
         """
         Evaluation of Python code with inspect information.
@@ -316,7 +316,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
                     interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
                     await interface.send_to(ctx)
 
-    @jsk.command(name="shell", aliases=["sh"])
+    @jsk.command(name="shell", aliases=["sh"], hidden=True)
     async def jsk_shell(self, ctx: commands.Context, *, argument: CodeblockConverter):
         """
         Executes statements in the system shell.
@@ -340,7 +340,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
                 await interface.add_line(f"\n[status] Return code {reader.close_code}")
 
-    @jsk.command(name="git")
+    @jsk.command(name="git", hidden=True)
     async def jsk_git(self, ctx: commands.Context, *, argument: CodeblockConverter):
         """
         Shortcut for 'jsk sh git'. Invokes the system shell.
@@ -348,7 +348,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         return await ctx.invoke(self.jsk_shell, argument=Codeblock(argument.language, "git " + argument.content))
 
-    @jsk.command(name="load", aliases=["reload"])
+    @jsk.command(name="load", aliases=["reload"], hidden=True)
     async def jsk_load(self, ctx: commands.Context, *extensions):
         """
         Loads or reloads the given extension names.
@@ -374,7 +374,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         for page in paginator.pages:
             await ctx.send(page)
 
-    @jsk.command(name="unload")
+    @jsk.command(name="unload", hidden=True)
     async def jsk_unload(self, ctx: commands.Context, *extensions):
         """
         Unloads the given extension names.
@@ -397,7 +397,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         for page in paginator.pages:
             await ctx.send(page)
 
-    @jsk.group(name="voice", aliases=["vc"])
+    @jsk.group(name="voice", aliases=["vc"], hidden=True)
     @commands.check(vc_check)
     async def jsk_voice(self, ctx: commands.Context):
         """
@@ -419,7 +419,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         await ctx.send(f"Connected to {voice.channel.name}, "
                        f"{'paused' if voice.is_paused() else 'playing' if voice.is_playing() else 'idle'}.")
 
-    @jsk_voice.command(name="join", aliases=["connect"])
+    @jsk_voice.command(name="join", aliases=["connect"], hidden=True)
     async def jsk_vc_join(self, ctx: commands.Context, *,
                           destination: typing.Union[discord.VoiceChannel, discord.Member] = None):
         """
@@ -447,7 +447,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         await ctx.send(f"Connected to {destination.name}.")
 
-    @jsk_voice.command(name="disconnect", aliases=["dc"])
+    @jsk_voice.command(name="disconnect", aliases=["dc"], hidden=True)
     @commands.check(connected_check)
     async def jsk_vc_disconnect(self, ctx: commands.Context):
         """
@@ -459,7 +459,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         await voice.disconnect()
         await ctx.send(f"Disconnected from {voice.channel.name}.")
 
-    @jsk_voice.command(name="stop")
+    @jsk_voice.command(name="stop", hidden=True)
     @commands.check(playing_check)
     async def jsk_vc_stop(self, ctx: commands.Context):
         """
@@ -471,7 +471,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         voice.stop()
         await ctx.send(f"Stopped playing audio in {voice.channel.name}.")
 
-    @jsk_voice.command(name="pause")
+    @jsk_voice.command(name="pause", hidden=True)
     @commands.check(playing_check)
     async def jsk_vc_pause(self, ctx: commands.Context):
         """
@@ -486,7 +486,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         voice.pause()
         await ctx.send(f"Paused audio in {voice.channel.name}.")
 
-    @jsk_voice.command(name="resume")
+    @jsk_voice.command(name="resume", hidden=True)
     @commands.check(playing_check)
     async def jsk_vc_resume(self, ctx: commands.Context):
         """
@@ -501,7 +501,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         voice.resume()
         await ctx.send(f"Resumed audio in {voice.channel.name}.")
 
-    @jsk_voice.command(name="volume")
+    @jsk_voice.command(name="volume", hidden=True)
     @commands.check(playing_check)
     async def jsk_vc_volume(self, ctx: commands.Context, *, percentage: float):
         """
@@ -520,7 +520,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         await ctx.send(f"Volume set to {volume * 100:.2f}%")
 
-    @jsk_voice.command(name="play", aliases=["play_local"])
+    @jsk_voice.command(name="play", aliases=["play_local"], hidden=True)
     @commands.check(connected_check)
     async def jsk_vc_play(self, ctx: commands.Context, *, uri: str):
         """
@@ -540,7 +540,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         voice.play(discord.PCMVolumeTransformer(discord.FFmpegPCMAudio(uri)))
         await ctx.send(f"Playing in {voice.channel.name}.")
 
-    @jsk_voice.command(name="youtube_dl", aliases=["youtubedl", "ytdl", "yt"])
+    @jsk_voice.command(name="youtube_dl", aliases=["youtubedl", "ytdl", "yt"], hidden=True)
     @commands.check(connected_check)
     async def jsk_vc_youtube_dl(self, ctx: commands.Context, *, url: str):
         """
@@ -561,7 +561,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         voice.play(discord.PCMVolumeTransformer(BasicYouTubeDLSource(url)))
         await ctx.send(f"Playing in {voice.channel.name}.")
 
-    @jsk.command(name="su")
+    @jsk.command(name="su", hidden=True)
     async def jsk_su(self, ctx: commands.Context, member: typing.Union[discord.Member, discord.User],
                      *, command_string: str):
         """
@@ -577,7 +577,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         return await alt_ctx.command.invoke(alt_ctx)
 
-    @jsk.command(name="sudo")
+    @jsk.command(name="sudo", hidden=True)
     async def jsk_sudo(self, ctx: commands.Context, *, command_string: str):
         """
         Run a command bypassing all checks and cooldowns.
@@ -592,7 +592,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         return await alt_ctx.command.reinvoke(alt_ctx)
 
-    @jsk.command(name="debug", aliases=["dbg"])
+    @jsk.command(name="debug", aliases=["dbg"], hidden=True)
     async def jsk_debug(self, ctx: commands.Context, *, command_string: str):
         """
         Run a command timing execution and catching exceptions.
