@@ -97,7 +97,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
             if cmdtask in self.tasks:
                 self.tasks.remove(cmdtask)
 
-    @commands.group(name="jishaku", aliases=["jsk"], hidden=HIDE_JISHAKU)
+    @commands.group(name="jishaku", aliases=["jsk"], hidden=True)
     @commands.is_owner()
     async def jsk(self, ctx: commands.Context):
         """
@@ -119,18 +119,6 @@ class Jishaku:  # pylint: disable=too-many-public-methods
              'Not using sharding.'}
             Average websocket latency: {round(self.bot.latency * 1000, 2)}ms
         """))
-
-    @jsk.command(name="hide")
-    async def jsk_hide(self, ctx: commands.Context):
-        """
-        Hides Jishaku from the help command.
-        """
-
-        if self.jsk.hidden:
-            return await ctx.send("Jishaku is already hidden.")
-
-        self.jsk.hidden = True
-        await ctx.send("Jishaku is now hidden.")
 
     @jsk.command(name="show")
     async def jsk_show(self, ctx: commands.Context):
