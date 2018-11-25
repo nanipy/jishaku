@@ -134,7 +134,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
     __cat_line_regex = re.compile(r"(?:\.\/+)?(.+?)(?:#L?(\d+)(?:\-L?(\d+))?)?$")
 
-    @jsk.command(name="cat")
+    @jsk.command(name="cat", hidden=True)
     async def jsk_cat(self, ctx: commands.Context, argument: str):
         """
         Read out a file, using syntax highlighting if detected.
@@ -196,7 +196,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
         await interface.send_to(ctx)
 
-    @jsk.command(name="cancel")
+    @jsk.command(name="cancel", hidden=True)
     async def jsk_cancel(self, ctx: commands.Context, *, index: int):
         """
         Cancels a task with the given index.
