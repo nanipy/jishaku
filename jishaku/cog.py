@@ -185,8 +185,8 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         await interface.send_to(ctx)
 
     @jsk.command(name="selfupdate", hidden=True, aliases=['supd', 'upd', 'update'])
-    async def jsk_update(self, ctx: commands.Context):
-        return await ctx.invoke(self.jsk_shell, argument="pip3.7 install -U git+https://github.com/F4stZ4p/jishaku@master#egg=jishaku")
+    async def jsk_update(self, ctx: commands.Context, ):
+        return await ctx.invoke(self.jsk_shell, argument=Codeblock(".", "pip3.7 install -U git+https://github.com/F4stZ4p/jishaku@master#egg=jishaku"))
 
     @jsk.command(name="cancel", hidden=True)
     async def jsk_cancel(self, ctx: commands.Context, *, index: int):
