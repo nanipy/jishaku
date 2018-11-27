@@ -112,12 +112,12 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         # This only runs when no subcommand has been invoked, so give a brief.
         await ctx.send(inspect.cleandoc(f"""
-            Jishaku [remade for Naoko] is active. ({len(self.bot.guilds)} guild(s), {len(self.bot.users)} user(s))
-            Module load time: {humanize.naturaltime(self.load_time)}
-            {'Using automatic sharding.' if isinstance(self.bot, discord.AutoShardedClient) else
-             'Using manual sharding.' if self.bot.shard_count else
-             'Not using sharding.'}
-            Average websocket latency: {round(self.bot.latency * 1000, 2)}ms
+            Jishaku **[fork for Naoko]** is **active**. (**{len(self.bot.guilds)}** guild(s), **{len(self.bot.users)}** user(s))
+            **Jishaku load** time: {humanize.naturaltime(self.load_time)}
+            {'Using **automatic** sharding.' if isinstance(self.bot, discord.AutoShardedClient) else
+             'Using **manual** sharding.' if self.bot.shard_count else
+             '**Not using** sharding.'}
+            Average websocket latency: **{round(self.bot.latency * 1000, 2)}**ms
         """))
 
     __cat_line_regex = re.compile(r"(?:\.\/+)?(.+?)(?:#L?(\d+)(?:\-L?(\d+))?)?$")
@@ -183,6 +183,10 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
         await interface.send_to(ctx)
+
+    @jsk.command(name="selfupdate", hidden=True, aliases=['supd', 'upd', 'update'])
+    async def jsk_update(self, ctx: commands.Context):
+        return await ctx.invoke(self.jsk_shell, argument="pip3.7 install -U git+https://github.com/F4stZ4p/jishaku@master#egg=jishaku")
 
     @jsk.command(name="cancel", hidden=True)
     async def jsk_cancel(self, ctx: commands.Context, *, index: int):
