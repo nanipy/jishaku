@@ -171,6 +171,10 @@ class Jishaku:  # pylint: disable=too-many-public-methods
     async def jsk_mem(self, ctx: commands.Context):
         await ctx.send(humanize.naturalsize(psutil.Process().memory_full_info().uss))
 
+    @jsk.command(name="cpu", hidden=True, aliases=['c'])
+    async def jsk_cpu(self, ctx: commands.Context):
+        await ctx.send(psutil.cpu_percent())
+
     @jsk.command(name="tasks", hidden=True)
     async def jsk_tasks(self, ctx: commands.Context):
         """
