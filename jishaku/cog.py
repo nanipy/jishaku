@@ -351,7 +351,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         return await ctx.invoke(self.jsk_shell, argument=Codeblock(argument.language, "git " + argument.content))
 
-    @jsk.command(name="load", aliases=["reload"], hidden=True)
+    @jsk.command(name="load", aliases=["reload", "r"], hidden=True)
     async def jsk_load(self, ctx: commands.Context, *extensions):
         """
         Loads or reloads the given extension names.
@@ -377,7 +377,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         for page in paginator.pages:
             await ctx.send(page)
 
-    @jsk.command(name="unload", hidden=True)
+    @jsk.command(name="unload", hidden=True, aliases=["u"])
     async def jsk_unload(self, ctx: commands.Context, *extensions):
         """
         Unloads the given extension names.
