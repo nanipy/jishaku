@@ -22,6 +22,7 @@ import re
 import time
 import traceback
 import typing
+import psutil
 
 import discord
 import humanize
@@ -165,6 +166,10 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         interface = PaginatorInterface(ctx.bot, paginator, owner=ctx.author)
         await interface.send_to(ctx)
+
+    @jsk.command(name="memory", hidden=True, aliases=['m', 'mem'])
+    async def jsk_mem(self, ctx: commands.Context):
+        await ctx.send(humanize.naturalsize(psutil.Process().memory_full_info().uss))
 
     @jsk.command(name="tasks", hidden=True)
     async def jsk_tasks(self, ctx: commands.Context):
