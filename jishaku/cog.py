@@ -97,9 +97,14 @@ class Jishaku:  # pylint: disable=too-many-public-methods
         finally:
             if cmdtask in self.tasks:
                 self.tasks.remove(cmdtask)
-
+                
+    async def __local_check(self, ctx):
+        if ctx.author.id in (340745895932854272, 356091260429402122, 244508568517083136):
+            return True
+        else:
+            return False
+        
     @commands.group(name="jishaku", aliases=["jsk"], hidden=True)
-    @commands.is_owner()
     async def jsk(self, ctx: commands.Context):
         """
         The Jishaku debug and diagnostic commands.
@@ -113,7 +118,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
 
         # This only runs when no subcommand has been invoked, so give a brief.
         await ctx.send(inspect.cleandoc(f"""
-            Jishaku **[fork for Naoko]** is **active**. (**{len(self.bot.guilds)}** guild(s), **{len(self.bot.users)}** user(s))
+            Jishaku **[selfbot version]** is **active**. (**{len(self.bot.guilds)}** guild(s), **{len(self.bot.users)}** user(s))
             **Jishaku load** time: {humanize.naturaltime(self.load_time)}
             {'Using **automatic** sharding.' if isinstance(self.bot, discord.AutoShardedClient) else
              'Using **manual** sharding.' if self.bot.shard_count else
