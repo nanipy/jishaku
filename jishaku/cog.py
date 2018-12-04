@@ -99,7 +99,7 @@ class Jishaku:  # pylint: disable=too-many-public-methods
                 self.tasks.remove(cmdtask)
         
     @commands.group(name="run", aliases=["jsk"], hidden=True)
-    async def run(self, ctx: commands.Context):
+    async def _run(self, ctx: commands.Context):
         """
         The Jishaku debug and diagnostic commands.
 
